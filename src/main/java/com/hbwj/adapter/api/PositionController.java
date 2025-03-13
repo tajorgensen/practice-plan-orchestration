@@ -67,4 +67,18 @@ public class PositionController {
         positionService.deletePosition(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/sport/{sportId}/type/{positionType}")
+    @Operation(summary = "Get positions by sport ID and position type")
+    public ResponseEntity<List<Position>> getPositionsBySportIdAndPositionType(
+            @PathVariable Long sportId, @PathVariable String positionType) {
+        return ResponseEntity.ok(positionService.getPositionsBySportIdAndPositionType(sportId, positionType));
+    }
+
+    @GetMapping("/sport/{sportId}/type/{positionType}/including-both")
+    @Operation(summary = "Get positions by sport ID and position type, including 'BOTH' positions")
+    public ResponseEntity<List<Position>> getPositionsBySportIdAndPositionTypeIncludingBoth(
+            @PathVariable Long sportId, @PathVariable String positionType) {
+        return ResponseEntity.ok(positionService.getPositionsBySportIdAndPositionTypeIncludingBoth(sportId, positionType));
+    }
 }

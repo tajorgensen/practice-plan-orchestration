@@ -16,4 +16,8 @@ public interface PositionService {
     Position updatePosition(Long id, Position position);
 
     void deletePosition(Long id);
+
+    List<Position> getPositionsBySportIdAndPositionType(Long sportId, String positionType);
+
+    List<Position> getPositionsBySportIdAndPositionTypeIncludingBoth(Long sportId, String positionType);
 }

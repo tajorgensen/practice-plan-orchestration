@@ -101,30 +101,38 @@ public class PracticePlanDrillSelector {
     }
 
     /**
-     * Select a random drill from the list, prioritizing unused drills
+     * Select a random drill from the list, ensuring it hasn't been used before.
+     * Returns null if no unused drills are available.
      */
     public Drill selectRandomDrill(List<Drill> drills, Set<Long> usedDrillIds) {
         List<Drill> availableDrills = drills.stream()
                 .filter(d -> !usedDrillIds.contains(d.getId()))
                 .collect(Collectors.toList());
 
-        if (availableDrills.isEmpty() && !drills.isEmpty()) {
-            // If all drills have been used but we need another, just pick any
-            return drills.get(new Random().nextInt(drills.size()));
-        } else if (availableDrills.isEmpty()) {
-            return null;
+        if (availableDrills.isEmpty()) {
+            return null; // No unused drills available
         }
 
         return availableDrills.get(new Random().nextInt(availableDrills.size()));
     }
 
     /**
-     * Select the best drill for a particular focus area
+     * Select the best drill for a particular focus area that hasn't been used yet.
+     * Returns null if no unused drills are available.
      */
-    public Drill selectBestDrill(List<Drill> drills, FocusArea targetFocusArea) {
+    public Drill selectBestDrill(List<Drill> drills, FocusArea targetFocusArea, Set<Long> usedDrillIds) {
+        // Filter out used drills
+        List<Drill> unusedDrills = drills.stream()
+                .filter(d -> !usedDrillIds.contains(d.getId()))
+                .collect(Collectors.toList());
+
+        if (unusedDrills.isEmpty()) {
+            return null; // No unused drills available
+        }
+
         if (targetFocusArea != null) {
             // Prioritize drills that match the target focus area
-            List<Drill> matchingDrills = drills.stream()
+            List<Drill> matchingDrills = unusedDrills.stream()
                     .filter(d -> d.getFocusAreaId().equals(targetFocusArea.getId()))
                     .collect(Collectors.toList());
 
@@ -133,8 +141,8 @@ public class PracticePlanDrillSelector {
             }
         }
 
-        // If no matching focus area or no target, pick a random drill
-        return drills.get(new Random().nextInt(drills.size()));
+        // If no matching focus area or no target, pick a random unused drill
+        return unusedDrills.get(new Random().nextInt(unusedDrills.size()));
     }
 
     /**

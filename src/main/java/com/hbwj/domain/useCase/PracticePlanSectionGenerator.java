@@ -108,30 +108,29 @@ public class PracticePlanSectionGenerator {
         // Create drills for each station
         List<Drill> stationDrills = new ArrayList<>();
         for (int i = 0; i < numStations; i++) {
-            // Find suitable drills for this station
+            // Find suitable drills for this station that haven't been used yet
             List<Drill> stationDrillCandidates = availableDrills.stream()
                     .filter(d -> d.getDurationMinutes() != null && d.getDurationMinutes() <= stationRotationTime * 2) // Allow some flexibility
                     .filter(d -> !usedDrillIds.contains(d.getId())) // Avoid duplicate drills
                     .collect(Collectors.toList());
 
-            if (stationDrillCandidates.isEmpty()) {
-                // If we've used all available drills, allow reuse
-                stationDrillCandidates = availableDrills.stream()
-                        .filter(d -> d.getDurationMinutes() != null && d.getDurationMinutes() <= stationRotationTime * 2)
-                        .collect(Collectors.toList());
+            if (!stationDrillCandidates.isEmpty()) {
+                Drill stationDrill = drillSelector.selectBestDrill(stationDrillCandidates, null, usedDrillIds);
+                if (stationDrill != null) {
+                    usedDrillIds.add(stationDrill.getId());
+                    stationDrills.add(stationDrill);
+                    continue;
+                }
             }
 
-            if (!stationDrillCandidates.isEmpty()) {
-                Drill stationDrill = drillSelector.selectBestDrill(stationDrillCandidates, null);
-                usedDrillIds.add(stationDrill.getId());
-                stationDrills.add(stationDrill);
-            } else {
-                // If we can't find a drill, just add a placeholder
-                Drill placeholderDrill = new Drill();
-                placeholderDrill.setName("Station " + (i + 1) + " Drill");
-                placeholderDrill.setDescription("No suitable drill found");
-                stationDrills.add(placeholderDrill);
-            }
+            // If we can't find an unused drill, create a generic station drill
+            Drill genericDrill = new Drill();
+            genericDrill.setId(-1L * (i + 1)); // Use negative IDs for synthetic drills
+            genericDrill.setName("Station " + (i + 1) + " Activities");
+            genericDrill.setDescription("General skill development activities for this station");
+            genericDrill.setInstructions("Coach should lead players through a series of skill-building exercises appropriate for this station.");
+            genericDrill.setDurationMinutes(stationRotationTime);
+            stationDrills.add(genericDrill);
         }
 
         // Create rotation groups
@@ -152,6 +151,7 @@ public class PracticePlanSectionGenerator {
             for (int stationIdx = 0; stationIdx < numStations; stationIdx++) {
                 Station station = new Station();
                 station.setStationNumber(stationIdx + 1);
+                station.setStationName("Station " + (stationIdx + 1)); // Standard station naming
 
                 // Calculate which drill this station should use in this rotation
                 // This creates the rotation pattern
@@ -194,14 +194,29 @@ public class PracticePlanSectionGenerator {
             return null;
         }
 
-        int positionGroupDuration = requestDto.getPositionGroupDurationMinutes();
+        String positionType;
+        if (focusAreaName.equalsIgnoreCase("Offense")) {
+            positionType = "OFFENSE";
+        } else if (focusAreaName.equalsIgnoreCase("Defense")) {
+            positionType = "DEFENSE";
+        } else {
+            positionType = null;
+        }
 
-        // Get all positions for the sport
-        List<Position> allPositions = positionService.getPositionsBySportId(requestDto.getSportId());
+        // Get positions filtered by type if applicable
+        List<Position> relevantPositions;
+        if (positionType != null) {
+            relevantPositions = positionService.getPositionsBySportIdAndPositionType(
+                    requestDto.getSportId(), positionType);
+        } else {
+            relevantPositions = positionService.getPositionsBySportId(requestDto.getSportId());
+        }
 
-        if (allPositions.isEmpty()) {
+        if (relevantPositions.isEmpty()) {
             return null;
         }
+
+        int positionGroupDuration = requestDto.getPositionGroupDurationMinutes();
 
         // Create a position group section (not rotational)
         PracticePlanSection positionSection = new PracticePlanSection();
@@ -221,7 +236,7 @@ public class PracticePlanSectionGenerator {
                 .collect(Collectors.toList());
 
         List<Station> positionStations = createPositionStations(
-                allPositions,
+                relevantPositions,
                 focusAreaDrills,
                 positionGroupDuration,
                 usedDrillIds,
@@ -230,7 +245,7 @@ public class PracticePlanSectionGenerator {
 
         // If we couldn't find any drills for positions, create generic ones
         if (positionStations.isEmpty()) {
-            positionStations = createGenericPositionStations(allPositions, targetFocusArea.getName());
+            positionStations = createGenericPositionStations(relevantPositions, targetFocusArea.getName());
         }
 
         group.setStations(positionStations);
@@ -313,32 +328,32 @@ public class PracticePlanSectionGenerator {
             return null;
         }
 
-        // Find suitable team drills (prioritize team-oriented drills)
+        // Find suitable team drills (prioritize drills marked as team activities) that haven't been used
         List<Drill> teamDrills = availableDrills.stream()
                 .filter(d -> d.getDurationMinutes() != null && d.getDurationMinutes() <= teamTimeDuration)
-                .filter(d -> !usedDrillIds.contains(d.getId()))
-                // Prefer drills that involve team coordination for team time
+                .filter(d -> !usedDrillIds.contains(d.getId())) // Only consider unused drills
+                // Prioritize drills explicitly marked as team activities
                 .sorted((d1, d2) -> {
-                    boolean d1TeamFocused = d1.getDescription() != null &&
-                            (d1.getDescription().toLowerCase().contains("team") ||
-                                    d1.getDescription().toLowerCase().contains("group") ||
-                                    d1.getDescription().toLowerCase().contains("scrimmage"));
-                    boolean d2TeamFocused = d2.getDescription() != null &&
-                            (d2.getDescription().toLowerCase().contains("team") ||
-                                    d2.getDescription().toLowerCase().contains("group") ||
-                                    d2.getDescription().toLowerCase().contains("scrimmage"));
+                    boolean d1TeamFocused = Boolean.TRUE.equals(d1.getIsTeamActivity());
+                    boolean d2TeamFocused = Boolean.TRUE.equals(d2.getIsTeamActivity());
+
+                    // Fall back to keyword matching if no explicit flag is set
+                    if (!d1TeamFocused && !d2TeamFocused) {
+                        d1TeamFocused = d1.getDescription() != null &&
+                                (d1.getDescription().toLowerCase().contains("team") ||
+                                        d1.getDescription().toLowerCase().contains("group") ||
+                                        d1.getDescription().toLowerCase().contains("scrimmage"));
+                        d2TeamFocused = d2.getDescription() != null &&
+                                (d2.getDescription().toLowerCase().contains("team") ||
+                                        d2.getDescription().toLowerCase().contains("group") ||
+                                        d2.getDescription().toLowerCase().contains("scrimmage"));
+                    }
 
                     if (d1TeamFocused && !d2TeamFocused) return -1;
                     if (!d1TeamFocused && d2TeamFocused) return 1;
                     return 0;
                 })
                 .collect(Collectors.toList());
-
-        if (teamDrills.isEmpty()) {
-            teamDrills = availableDrills.stream()
-                    .filter(d -> d.getDurationMinutes() != null && d.getDurationMinutes() <= teamTimeDuration)
-                    .collect(Collectors.toList());
-        }
 
         if (!teamDrills.isEmpty()) {
             Drill teamDrill = drillSelector.selectRandomDrill(teamDrills, usedDrillIds);
@@ -356,10 +371,21 @@ public class PracticePlanSectionGenerator {
             }
         }
 
-        // If no suitable drills, create a generic team time section
+        // If no suitable unused drills, create a generic team time section
         PracticePlanSection teamSection = new PracticePlanSection();
         teamSection.setSectionType("Team Time");
         teamSection.setDurationMinutes(teamTimeDuration);
+
+        // Create a generic team drill
+        Drill genericTeamDrill = new Drill();
+        genericTeamDrill.setId(-100L); // Use a negative ID to avoid conflicts
+        genericTeamDrill.setName("Team Scrimmage");
+        genericTeamDrill.setDescription("Full team scrimmage to apply skills learned during practice");
+        genericTeamDrill.setInstructions("Divide team into two groups. Run a controlled scrimmage focusing on implementing concepts covered earlier in practice. Coaches should provide immediate feedback and make teaching moments when necessary.");
+        genericTeamDrill.setDurationMinutes(teamTimeDuration);
+        genericTeamDrill.setIsTeamActivity(true);
+
+        teamSection.setDrill(genericTeamDrill);
         teamSection.setCoachingPoints("Focus on team coordination, game situations, and applying skills learned in practice");
         teamSection.setConcurrent(false);
 
@@ -397,6 +423,7 @@ public class PracticePlanSectionGenerator {
 
                     Station station = new Station();
                     station.setStationNumber(stationNumber++);
+                    station.setStationName(position.getName()); // Use position name for station name
                     station.setDrill(positionDrill);
                     station.setCoachingPoints("All " + position.getName() + "s focus on this " + focusAreaName +
                             " drill as a single group. Provide individual feedback and coaching.");
@@ -411,6 +438,7 @@ public class PracticePlanSectionGenerator {
 
                     Station station = new Station();
                     station.setStationNumber(stationNumber++);
+                    station.setStationName(position.getName()); // Use position name for station name
                     station.setDrill(genericDrill);
                     station.setCoachingPoints("All " + position.getName() + "s work together as one group on this drill " +
                             "with focus on " + focusAreaName + " skills.");
@@ -428,6 +456,7 @@ public class PracticePlanSectionGenerator {
 
                     Station station = new Station();
                     station.setStationNumber(stationNumber++);
+                    station.setStationName(position.getName()); // Use position name for station name
                     station.setDrill(syntheticDrill);
                     station.setCoachingPoints("Have all " + position.getName() + "s focus on " +
                             focusAreaName + " skills as a single position group.");
@@ -438,7 +467,7 @@ public class PracticePlanSectionGenerator {
         }
 
         return stations;
-}
+    }
 
     /**
      * Create stations with generic position descriptions when no suitable drills are found
@@ -459,6 +488,7 @@ public class PracticePlanSectionGenerator {
 
             Station station = new Station();
             station.setStationNumber(stationNumber++);
+            station.setStationName(position.getName()); // Use position name for station name
             station.setDrill(genericDrill);
             station.setCoachingPoints("All " + position.getName() + "s work together as one group on " +
                     focusAreaName + " skills specific to their position.");

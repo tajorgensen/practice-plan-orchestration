@@ -3,6 +3,7 @@ package com.hbwj.domain.port;
 import com.hbwj.domain.model.Drill;
 import com.hbwj.domain.model.DrillDetail;
 import com.hbwj.domain.model.DrillEquipment;
+import com.hbwj.domain.model.Position;
 
 import java.util.List;
 
@@ -32,4 +33,10 @@ public interface DrillService {
     void addEquipmentToDrill(Long drillId, DrillEquipment drillEquipment);
 
     void removeEquipmentFromDrill(Long drillId, Long equipmentId);
+
+    void addPositionToDrill(Long drillId, Long positionId);
+
+    void removePositionFromDrill(Long drillId, Long positionId);
+
+    List<Position> getDrillPositions(Long drillId);
 }

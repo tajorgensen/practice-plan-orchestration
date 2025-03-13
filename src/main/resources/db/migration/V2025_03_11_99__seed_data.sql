@@ -132,72 +132,93 @@ INSERT INTO equipment (name, description) VALUES
                                               ('Passing Nets', 'Target nets for passing accuracy training');
 
 -- Insert sample drills for Basketball
-INSERT INTO drills (name, description, instructions, duration_minutes, difficulty_level, focus_area_id) VALUES
-                                                                                                            ('Figure 8 Dribbling', 'Dribbling in a figure 8 pattern to improve ball control',
-                                                                                                             'Set up two cones about 3 feet apart. Dribble around the cones in a figure 8 pattern, alternating hands as you move from one cone to the other. Focus on keeping the ball low and maintaining control.',
-                                                                                                             5, 'Beginner', 1),
+INSERT INTO drills (name, description, instructions, duration_minutes, difficulty_level, focus_area_id, is_team_activity) VALUES
+                                                                                                                              ('Figure 8 Dribbling', 'Dribbling in a figure 8 pattern to improve ball control',
+                                                                                                                               'Set up two cones about 3 feet apart. Dribble around the cones in a figure 8 pattern, alternating hands as you move from one cone to the other. Focus on keeping the ball low and maintaining control.',
+                                                                                                                               5, 'Beginner', 1, 0),
 
-                                                                                                            ('Two-Ball Dribbling', 'Dribbling two basketballs simultaneously to improve coordination',
-                                                                                                             'Using two basketballs, dribble both simultaneously at the same height. Progress to alternating heights (one high, one low). Then try dribbling while walking, then jogging.',
-                                                                                                             10, 'Intermediate', 1),
+                                                                                                                              ('Two-Ball Dribbling', 'Dribbling two basketballs simultaneously to improve coordination',
+                                                                                                                               'Using two basketballs, dribble both simultaneously at the same height. Progress to alternating heights (one high, one low). Then try dribbling while walking, then jogging.',
+                                                                                                                               10, 'Intermediate', 1, 0),
 
-                                                                                                            ('Form Shooting Close Range', 'Close range shooting focusing on proper form',
-                                                                                                             'Stand 3-5 feet from the basket. Focus on proper shooting form: balanced stance, elbow under the ball, wrist snap, and follow through. Make 10 shots with perfect form before stepping back.',
-                                                                                                             15, 'Beginner', 1),
+                                                                                                                              ('Form Shooting Close Range', 'Close range shooting focusing on proper form',
+                                                                                                                               'Stand 3-5 feet from the basket. Focus on proper shooting form: balanced stance, elbow under the ball, wrist snap, and follow through. Make 10 shots with perfect form before stepping back.',
+                                                                                                                               15, 'Beginner', 1, 0),
 
-                                                                                                            ('Free Throw Routine', 'Developing a consistent free throw routine',
-                                                                                                             'Establish a consistent pre-shot routine. Take 10 deep breaths, bounce the ball 3 times, spin it in your hands, focus on the rim, bend knees, and shoot with proper form. Shoot 25 free throws, focusing on consistency.',
-                                                                                                             20, 'Intermediate', 1),
+                                                                                                                              ('Free Throw Routine', 'Developing a consistent free throw routine',
+                                                                                                                               'Establish a consistent pre-shot routine. Take 10 deep breaths, bounce the ball 3 times, spin it in your hands, focus on the rim, bend knees, and shoot with proper form. Shoot 25 free throws, focusing on consistency.',
+                                                                                                                               20, 'Intermediate', 1, 0),
 
-                                                                                                            ('3-Point Circuit', 'Shooting from 5 positions around the 3-point line',
-                                                                                                             'Set up at 5 spots around the 3-point line. Take 5 shots from each position, rotating clockwise. Track makes and aim for improvement each session.',
-                                                                                                             15, 'Advanced', 2);
+                                                                                                                              ('3-Point Circuit', 'Shooting from 5 positions around the 3-point line',
+                                                                                                                               'Set up at 5 spots around the 3-point line. Take 5 shots from each position, rotating clockwise. Track makes and aim for improvement each session.',
+                                                                                                                               15, 'Advanced', 2, 0);
 
 -- Insert football drills (Fundamentals)
-INSERT INTO drills (name, description, instructions, duration_minutes, difficulty_level, focus_area_id) VALUES
-                                                                                                            ('QB Footwork Progression', 'Develop quarterback dropback and setup technique',
-                                                                                                             'Set up 5 cones in a line with 2 yards between each. QB practices 3-step, 5-step, and 7-step drops, focusing on proper footwork, balance, and setup position. After each drop, QB sets feet and simulates throwing motion. Emphasize quick feet, proper weight transfer, and maintaining proper throwing posture.',
-                                                                                                             15, 'Intermediate', 1),
+INSERT INTO drills (name, description, instructions, duration_minutes, difficulty_level, focus_area_id, is_team_activity) VALUES
+                                                                                                                              ('QB Footwork Progression', 'Develop quarterback dropback and setup technique',
+                                                                                                                               'Set up 5 cones in a line with 2 yards between each. QB practices 3-step, 5-step, and 7-step drops, focusing on proper footwork, balance, and setup position. After each drop, QB sets feet and simulates throwing motion. Emphasize quick feet, proper weight transfer, and maintaining proper throwing posture.',
+                                                                                                                               15, 'Intermediate', 1, 0),
 
-                                                                                                            ('Pass Protection Footwork', 'Develop offensive line pass blocking footwork',
-                                                                                                             'Set up in a line with each lineman in proper stance. On coach''s signal, linemen take a kick-step back at 45-degree angle, maintaining base and balance. Progress to 3-step protection sets, focusing on maintaining leverage and balance. Coach can add hand shields to simulate pass rushers. Emphasize quick feet, good base, and proper hand placement.',
-                                                                                                             15, 'Intermediate', 1),
+                                                                                                                              ('Pass Protection Footwork', 'Develop offensive line pass blocking footwork',
+                                                                                                                               'Set up in a line with each lineman in proper stance. On coach''s signal, linemen take a kick-step back at 45-degree angle, maintaining base and balance. Progress to 3-step protection sets, focusing on maintaining leverage and balance. Coach can add hand shields to simulate pass rushers. Emphasize quick feet, good base, and proper hand placement.',
+                                                                                                                               15, 'Intermediate', 1, 0),
 
-                                                                                                            ('Receiver Route Tree', 'Practice running precise routes for receivers',
-                                                                                                             'Set up cones marking the starting point and each break point for routes. Practice each of the 9 basic routes: flat, slant, quick out, curl, comeback, dig (in), post, corner, and go. Focus on sharp breaks, proper footwork, and maintaining speed through cuts. Coach can throw passes to complete each route.',
-                                                                                                             20, 'Intermediate', 1),
+                                                                                                                              ('Receiver Route Tree', 'Practice running precise routes for receivers',
+                                                                                                                               'Set up cones marking the starting point and each break point for routes. Practice each of the 9 basic routes: flat, slant, quick out, curl, comeback, dig (in), post, corner, and go. Focus on sharp breaks, proper footwork, and maintaining speed through cuts. Coach can throw passes to complete each route.',
+                                                                                                                               20, 'Intermediate', 1, 0),
 
-                                                                                                            ('Form Tackling Circuit', 'Practice proper tackling technique with safety emphasis',
-                                                                                                             'Set up 4 stations: 1) Angle tackles on a moving target, 2) Head-on tackles against a tackle dummy, 3) Open-field breakdown and tackle, 4) Gang tackling with teammates. Players rotate through stations, spending 4 minutes at each. Emphasize proper head position (head across the body), wrapping with arms, driving with legs, and safe technique.',
-                                                                                                             20, 'Beginner', 1);
+                                                                                                                              ('Form Tackling Circuit', 'Practice proper tackling technique with safety emphasis',
+                                                                                                                               'Set up 4 stations: 1) Angle tackles on a moving target, 2) Head-on tackles against a tackle dummy, 3) Open-field breakdown and tackle, 4) Gang tackling with teammates. Players rotate through stations, spending 4 minutes at each. Emphasize proper head position (head across the body), wrapping with arms, driving with legs, and safe technique.',
+                                                                                                                               20, 'Beginner', 1, 0);
 
 -- Insert football drills (Offense)
-INSERT INTO drills (name, description, instructions, duration_minutes, difficulty_level, focus_area_id) VALUES
-                                                                                                            ('Inside Zone Run Install', 'Install and practice inside zone running play',
-                                                                                                             'Set up defense with tackle dummies or coaches. Walk through inside zone blocking assignments for each position. Running backs practice read steps and finding the cutback lane. Progress from walk-through to half-speed, then full-speed reps. Focus on combo blocks, running back reads, and timing.',
-                                                                                                             20, 'Intermediate', 2),
+INSERT INTO drills (name, description, instructions, duration_minutes, difficulty_level, focus_area_id, is_team_activity) VALUES
+                                                                                                                              ('Inside Zone Run Install', 'Install and practice inside zone running play',
+                                                                                                                               'Set up defense with tackle dummies or coaches. Walk through inside zone blocking assignments for each position. Running backs practice read steps and finding the cutback lane. Progress from walk-through to half-speed, then full-speed reps. Focus on combo blocks, running back reads, and timing.',
+                                                                                                                               20, 'Intermediate', 2, 0),
 
-                                                                                                            ('Passing Concept Installation', 'Install and practice pass concepts and progressions',
-                                                                                                             'Set up defense alignment with cones or coaches. Walk through a passing concept (e.g., Smash, Flood, Mesh) with receivers running routes at walking pace. QB practices progression reads. Progress to half-speed with timing emphasis, then full-speed reps. Focus on route depths, timing, and quarterback progression.',
-                                                                                                             25, 'Advanced', 2),
+                                                                                                                              ('Passing Concept Installation', 'Install and practice pass concepts and progressions',
+                                                                                                                               'Set up defense alignment with cones or coaches. Walk through a passing concept (e.g., Smash, Flood, Mesh) with receivers running routes at walking pace. QB practices progression reads. Progress to half-speed with timing emphasis, then full-speed reps. Focus on route depths, timing, and quarterback progression.',
+                                                                                                                               25, 'Advanced', 2, 0),
 
-                                                                                                            ('Running Back Screen Development', 'Practice timing and execution of RB screen passes',
-                                                                                                             'Set up offensive line, quarterback, and running back. Defensive players or coaches provide token pressure. Practice the three phases of the screen: linemen allow defenders through, quarterback throws over rushers, and linemen release to block downfield. Focus on timing between QB and RB, linemen''s downfield blocking angles, and RB setting up blocks.',
-                                                                                                             15, 'Intermediate', 2);
+                                                                                                                              ('Running Back Screen Development', 'Practice timing and execution of RB screen passes',
+                                                                                                                               'Set up offensive line, quarterback, and running back. Defensive players or coaches provide token pressure. Practice the three phases of the screen: linemen allow defenders through, quarterback throws over rushers, and linemen release to block downfield. Focus on timing between QB and RB, linemen''s downfield blocking angles, and RB setting up blocks.',
+                                                                                                                               15, 'Intermediate', 2, 0);
 
 -- Insert football drills (Defense)
-INSERT INTO drills (name, description, instructions, duration_minutes, difficulty_level, focus_area_id) VALUES
-                                                                                                            ('Linebacker Fit and Fill', 'Practice linebacker run fits and gap responsibilities',
-                                                                                                             'Set up offensive line and tight end alignment with tackle dummies or coaches. Linebackers align in proper position. On coach''s signal, offense simulates run blocking while linebackers read and react, filling their assigned gaps. Progress from walk-through to full speed. Focus on proper read steps, taking on blocks, and gap integrity.',
-                                                                                                             15, 'Intermediate', 3),
+INSERT INTO drills (name, description, instructions, duration_minutes, difficulty_level, focus_area_id, is_team_activity) VALUES
+                                                                                                                              ('Linebacker Fit and Fill', 'Practice linebacker run fits and gap responsibilities',
+                                                                                                                               'Set up offensive line and tight end alignment with tackle dummies or coaches. Linebackers align in proper position. On coach''s signal, offense simulates run blocking while linebackers read and react, filling their assigned gaps. Progress from walk-through to full speed. Focus on proper read steps, taking on blocks, and gap integrity.',
+                                                                                                                               15, 'Intermediate', 3, 0),
 
-                                                                                                            ('DB Coverage Techniques', 'Practice defensive back coverage techniques',
-                                                                                                             'Set up receivers and defensive backs. Practice four techniques: 1) Press coverage with proper jam technique, 2) Off coverage with backpedal and break, 3) Zone coverage with drop and read, 4) Pattern-matching based on receiver releases. Focus on proper footwork, hip flexibility, and eye discipline.',
-                                                                                                             20, 'Advanced', 3),
+                                                                                                                              ('DB Coverage Techniques', 'Practice defensive back coverage techniques',
+                                                                                                                               'Set up receivers and defensive backs. Practice four techniques: 1) Press coverage with proper jam technique, 2) Off coverage with backpedal and break, 3) Zone coverage with drop and read, 4) Pattern-matching based on receiver releases. Focus on proper footwork, hip flexibility, and eye discipline.',
+                                                                                                                               20, 'Advanced', 3, 0),
 
-                                                                                                            ('D-Line Pass Rush Techniques', 'Develop defensive line pass rush moves and techniques',
-                                                                                                             'Set up offensive linemen with shields or tackle dummies. Defensive linemen practice four main pass rush moves: 1) Bull rush, 2) Rip move, 3) Swim move, 4) Spin move. Each player takes 3-4 reps of each move, focusing on proper technique and timing. Progress to combining moves in sequences. Emphasize get-off speed, hand placement, and finishing to the quarterback.',
-                                                                                                             15, 'Intermediate', 3);
+                                                                                                                              ('D-Line Pass Rush Techniques', 'Develop defensive line pass rush moves and techniques',
+                                                                                                                               'Set up offensive linemen with shields or tackle dummies. Defensive linemen practice four main pass rush moves: 1) Bull rush, 2) Rip move, 3) Swim move, 4) Spin move. Each player takes 3-4 reps of each move, focusing on proper technique and timing. Progress to combining moves in sequences. Emphasize get-off speed, hand placement, and finishing to the quarterback.',
+                                                                                                                               15, 'Intermediate', 3, 0);
+
+-- Insert new team gameplan drills
+INSERT INTO drills (name, description, instructions, duration_minutes, difficulty_level, is_team_activity, focus_area_id)
+VALUES (
+           'Implement Offensive Gameplan',
+           'A full-team drill focused on executing offensive plays and strategies as they would appear in game situations',
+           'Set up your offense against a scout defense. Run through your offensive gameplan with all players participating in their assigned roles. Focus on timing, execution, and communication. Rotate players through different positions as needed. Coaches should stop play to provide feedback on execution and make adjustments as necessary. Aim to run 8-10 different offensive sets or plays.',
+           20,
+           'Intermediate',
+           1, -- true for is_team_activity
+           2  -- focus_area_id for Offense
+       ),
+       (
+           'Implement Defensive Gameplan',
+           'A full-team drill focused on executing defensive schemes and strategies as they would appear in game situations',
+           'Set up your defense against a scout offense. Work through various defensive sets, rotations, and adjustments based on offensive formations and actions. Focus on communication, proper positioning, and coordinated movement. Coaches should simulate different offensive looks that the team is likely to face in upcoming games. After each sequence, provide immediate feedback on execution and areas for improvement.',
+           20,
+           'Intermediate',
+           1, -- true for is_team_activity
+           3  -- focus_area_id for Defense
+       );
 
 -- Connect drills to sports (Basketball)
 INSERT INTO drill_sports (drill_id, sport_id) VALUES
@@ -219,6 +240,13 @@ INSERT INTO drill_sports (drill_id, sport_id) VALUES
                                                   (13, 2), -- Linebacker Fit and Fill for Football
                                                   (14, 2), -- DB Coverage Techniques for Football
                                                   (15, 2); -- D-Line Pass Rush Techniques for Football
+
+-- Connect team gameplan drills to all sports
+INSERT INTO drill_sports (drill_id, sport_id)
+SELECT 16, sport_id FROM sports; -- Offensive Gameplan for all sports
+
+INSERT INTO drill_sports (drill_id, sport_id)
+SELECT 17, sport_id FROM sports; -- Defensive Gameplan for all sports
 
 -- Connect drills to positions (Basketball)
 INSERT INTO drill_positions (drill_id, position_id) VALUES
@@ -257,6 +285,13 @@ INSERT INTO drill_positions (drill_id, position_id) VALUES
                                                         (13, 12), -- Linebacker Fit and Fill for Linebacker
                                                         (14, 13), -- DB Coverage Techniques for Cornerback
                                                         (15, 11); -- D-Line Pass Rush Techniques for Defensive Line
+
+-- Connect team gameplan drills to all positions
+INSERT INTO drill_positions (drill_id, position_id)
+SELECT 16, position_id FROM positions; -- Offensive Gameplan for all positions
+
+INSERT INTO drill_positions (drill_id, position_id)
+SELECT 17, position_id FROM positions; -- Defensive Gameplan for all positions
 
 -- Connect drills to KPIs with impact levels (Basketball)
 INSERT INTO drill_kpis (drill_id, kpi_id, impact_level) VALUES
@@ -311,6 +346,14 @@ INSERT INTO drill_equipment (drill_id, equipment_id, quantity) VALUES
                                                                    (15, 13, 4), -- D-Line Pass Rush Techniques requires 4 Hand Shields
                                                                    (15, 11, 2); -- D-Line Pass Rush Techniques requires 2 Blocking Pads
 
+-- Connect team gameplan drills to equipment
+INSERT INTO drill_equipment (drill_id, equipment_id, quantity) VALUES
+                                                                   (16, 8, 3), -- Offensive Gameplan requires 3 Footballs
+                                                                   (16, 2, 12), -- Offensive Gameplan requires 12 Cones for formation alignment
+                                                                   (17, 8, 3), -- Defensive Gameplan requires 3 Footballs
+                                                                   (17, 2, 12), -- Defensive Gameplan requires 12 Cones for defensive positioning
+                                                                   (17, 13, 4); -- Defensive Gameplan requires 4 Hand Shields
+
 -- Create practice plans
 -- Basketball practice plan
 INSERT INTO practice_plans (name, description, sport_id, focus_area_id, total_duration_minutes) VALUES
@@ -334,3 +377,205 @@ INSERT INTO practice_plan_drills (practice_plan_id, drill_id, sequence_order, du
                                                                                                            (2, 8, 2, 20, 'Focus on precise routes and timing'),
                                                                                                            (2, 7, 3, 15, 'Emphasize proper pass protection technique'),
                                                                                                            (2, 9, 4, 20, 'Finish with fundamental tackling practice');
+
+-- Additional Football Fundamentals Drills
+INSERT INTO drills (name, description, instructions, duration_minutes, difficulty_level, focus_area_id, is_team_activity) VALUES
+                                                                                                                              ('Ball Security Circuit', 'Multi-station drill focusing on ball security techniques',
+                                                                                                                               'Set up 4 stations: 1) High and tight carry, 2) Four points of pressure, 3) Gauntlet with coaches attempting strips, 4) Fumble recovery. Players spend 3 minutes at each station before rotating. Emphasize proper technique for carrying the ball in traffic and securing the ball through contact.',
+                                                                                                                               15, 'Beginner', 1, 0),
+
+                                                                                                                              ('Lateral Movement Ladder', 'Agility ladder drill focusing on lateral movement and footwork',
+                                                                                                                               'Set up an agility ladder on the ground. Players perform various footwork patterns: lateral shuffles, in-out steps, crossover steps, and backward movements. Each player completes 2 reps of each pattern. Focus on quick feet, proper body positioning, and maintaining athletic stance throughout each movement.',
+                                                                                                                               10, 'Beginner', 1, 0),
+
+                                                                                                                              ('Reaction Ball Drill', 'Drill using reaction balls to improve hand-eye coordination',
+                                                                                                                               'Players pair up with one reaction ball (a ball with irregular bumps that causes unpredictable bounces). One player bounces the ball to their partner who must catch it. After 10 successful catches, switch roles. Progress to more challenging variations by increasing distance or adding movement patterns before catching.',
+                                                                                                                               12, 'Intermediate', 1, 0),
+
+                                                                                                                              ('Quick Release Throwing', 'Drill to develop quarterback quick release mechanics',
+                                                                                                                               'Quarterbacks start in proper stance with ball in hand. On coachs signal, they execute a quick three-step drop and throw to a target. Focus on maintaining proper grip, compact throwing motion, and follow-through. Gradually decrease the time between the signal and throw to develop faster release.', 15, 'Intermediate', 1, 0);
+
+-- Additional Football Offense Drills
+INSERT INTO drills (name, description, instructions, duration_minutes, difficulty_level, focus_area_id, is_team_activity) VALUES
+    ('Route Timing Development', 'Drill to improve timing between quarterbacks and receivers',
+     'Set up with quarterback and receivers at appropriate positions. Receivers run specific routes at full speed while quarterbacks time their throws to hit receivers in stride. Focus on consistent route depths, sharp breaks, and quarterback anticipation. Each quarterback-receiver pair runs 8-10 reps.',
+     18, 'Intermediate', 2, 0),
+
+    ('Red Zone Scoring Series', 'Installation of red zone scoring plays',
+     'Set up offense at the 20-yard line facing a scout defense. Install 3-5 red zone scoring plays, starting with walk-through pace and progressing to full speed. Focus on precise execution, timing, and coverage recognition. Run each play multiple times until execution is consistent.',
+     20, 'Advanced', 2, 0),
+
+    ('RPO (Run-Pass Option) Development', 'Practice for implementing and executing RPO concepts',
+     'Set up offense against appropriate defensive front. Quarterbacks practice reading the designated defender (usually a linebacker or safety) to determine whether to hand off or throw. Start with simplified defensive looks and progress to more complex reactions. Focus on quick decision-making and proper execution based on reads.',
+     25, 'Advanced', 2, 0),
+
+    ('Blitz Recognition and Pickup', 'Drill focusing on identifying and blocking blitzing defenders',
+     'Offensive line, quarterback, and running backs set up against a defense showing multiple blitz looks. On snap, offense must identify the blitz and adjust protection accordingly. Start with predetermined blitzes and progress to disguised pressures. Focus on communication, recognition, and proper blocking techniques.',
+     20, 'Advanced', 2, 0);
+
+-- Additional Football Defense Drills
+INSERT INTO drills (name, description, instructions, duration_minutes, difficulty_level, focus_area_id, is_team_activity) VALUES
+    ('Turnover Circuit', 'Multi-station drill focusing on creating turnovers',
+     'Set up 4 stations: 1) Strip technique, 2) Punch-out drills, 3) Interception techniques, 4) Scoop and score. Players rotate through each station for 4 minutes each. Emphasize proper technique for attacking the ball while maintaining sound tackling position.',
+     18, 'Intermediate', 3, 0),
+
+    ('Pursuit Angles', 'Drill to develop proper pursuit angles to the ball carrier',
+     'Set up 3 lanes with cones. Ball carriers run through the outside lanes while defenders start from the middle lane and must take proper angles to intercept the ball carrier. Vary the starting positions and speeds to create different angle challenges. Focus on maintaining leverage and taking efficient paths to the ball.',
+     15, 'Intermediate', 3, 0),
+
+    ('Pattern Match Coverage', 'Practice for defensive backs to execute pattern-matching coverages',
+     'Defensive backs line up against multiple receiver formations. On coachs signal, receivers run route combinations while defenders practice pattern-matching rules. Start with basic route combinations and progress to more complex concepts. Focus on communication, route recognition, and proper technique for transitioning between receivers.',
+     22, 'Advanced', 3, 0),
+
+    ('Defensive Line Stunts and Twists', 'Practice for defensive line movement and coordination',
+     'Defensive linemen line up against blocking dummies or an offensive line. Practice various stunts, twists, and movement patterns designed to create penetration and pressure. Focus on timing, footwork, and coordination between linemen. Progress from half-speed to full-speed execution.',18, 'Advanced', 3, 0);
+
+-- Associate new fundamental drills with sports
+INSERT INTO drill_sports (drill_id, sport_id)
+VALUES
+    (18, 2), -- Ball Security Circuit for Football
+    (19, 2), -- Lateral Movement Ladder for Football
+    (20, 2), -- Reaction Ball Drill for Football
+    (21, 2); -- Quick Release Throwing for Football
+
+-- Associate new offensive drills with sports
+INSERT INTO drill_sports (drill_id, sport_id)
+VALUES
+    (22, 2), -- Route Timing Development for Football
+    (23, 2), -- Red Zone Scoring Series for Football
+    (24, 2), -- RPO Development for Football
+    (25, 2); -- Blitz Recognition and Pickup for Football
+
+-- Associate new defensive drills with sports
+INSERT INTO drill_sports (drill_id, sport_id)
+VALUES
+    (26, 2), -- Turnover Circuit for Football
+    (27, 2), -- Pursuit Angles for Football
+    (28, 2), -- Pattern Match Coverage for Football
+    (29, 2); -- Defensive Line Stunts and Twists for Football
+
+-- Associate drills with appropriate positions
+INSERT INTO drill_positions (drill_id, position_id)
+VALUES
+    -- Ball Security Circuit
+    (18, 6), -- Quarterback
+    (18, 7), -- Running Back
+    (18, 8), -- Wide Receiver
+    (18, 9), -- Tight End
+
+    -- Lateral Movement Ladder
+    (19, 6), -- Quarterback
+    (19, 7), -- Running Back
+    (19, 8), -- Wide Receiver
+    (19, 9), -- Tight End
+    (19, 11), -- Defensive Line
+    (19, 12), -- Linebacker
+    (19, 13), -- Cornerback
+    (19, 14), -- Safety
+
+    -- Reaction Ball Drill
+    (20, 6), -- Quarterback
+    (20, 8), -- Wide Receiver
+    (20, 9), -- Tight End
+    (20, 13), -- Cornerback
+    (20, 14), -- Safety
+
+    -- Quick Release Throwing
+    (21, 6), -- Quarterback
+
+    -- Route Timing Development
+    (22, 6), -- Quarterback
+    (22, 8), -- Wide Receiver
+    (22, 9), -- Tight End
+
+    -- Red Zone Scoring Series
+    (23, 6), -- Quarterback
+    (23, 7), -- Running Back
+    (23, 8), -- Wide Receiver
+    (23, 9), -- Tight End
+    (23, 10), -- Offensive Line
+
+    -- RPO Development
+    (24, 6), -- Quarterback
+    (24, 7), -- Running Back
+    (24, 8), -- Wide Receiver
+    (24, 9), -- Tight End
+    (24, 10), -- Offensive Line
+
+    -- Blitz Recognition and Pickup
+    (25, 6), -- Quarterback
+    (25, 7), -- Running Back
+    (25, 10), -- Offensive Line
+
+    -- Turnover Circuit
+    (26, 11), -- Defensive Line
+    (26, 12), -- Linebacker
+    (26, 13), -- Cornerback
+    (26, 14), -- Safety
+
+    -- Pursuit Angles
+    (27, 11), -- Defensive Line
+    (27, 12), -- Linebacker
+    (27, 13), -- Cornerback
+    (27, 14), -- Safety
+
+    -- Pattern Match Coverage
+    (28, 13), -- Cornerback
+    (28, 14), -- Safety
+
+    -- Defensive Line Stunts and Twists
+    (29, 11); -- Defensive Line
+
+-- Add equipment for new drills
+INSERT INTO drill_equipment (drill_id, equipment_id, quantity)
+VALUES
+    -- Ball Security Circuit
+    (18, 8, 4), -- 4 Footballs
+    (18, 13, 2), -- 2 Hand Shields
+
+    -- Lateral Movement Ladder
+    (19, 3, 2), -- 2 Agility Ladders
+    (19, 2, 8), -- 8 Cones
+
+    -- Reaction Ball Drill
+    (20, 2, 4), -- 4 Cones
+
+    -- Quick Release Throwing
+    (21, 8, 6), -- 6 Footballs
+    (21, 2, 8), -- 8 Cones
+
+    -- Route Timing Development
+    (22, 8, 4), -- 4 Footballs
+    (22, 2, 12), -- 12 Cones
+
+    -- Red Zone Scoring Series
+    (23, 8, 3), -- 3 Footballs
+    (23, 2, 10), -- 10 Cones
+
+    -- RPO Development
+    (24, 8, 3), -- 3 Footballs
+    (24, 2, 8), -- 8 Cones
+    (24, 12, 2), -- 2 Tackle Dummies
+
+    -- Blitz Recognition and Pickup
+    (25, 8, 2), -- 2 Footballs
+    (25, 13, 4), -- 4 Hand Shields
+    (25, 2, 8), -- 8 Cones
+
+    -- Turnover Circuit
+    (26, 8, 6), -- 6 Footballs
+    (26, 13, 4), -- 4 Hand Shields
+    (26, 14, 1), -- 1 Ball on Stick
+
+    -- Pursuit Angles
+    (27, 8, 3), -- 3 Footballs
+    (27, 2, 12), -- 12 Cones
+
+    -- Pattern Match Coverage
+    (28, 8, 3), -- 3 Footballs
+    (28, 2, 12), -- 12 Cones
+
+    -- Defensive Line Stunts and Twists
+    (29, 9, 1), -- 1 Blocking Sled
+    (29, 11, 4), -- 4 Blocking Pads
+    (29, 2, 6); -- 6 Cones

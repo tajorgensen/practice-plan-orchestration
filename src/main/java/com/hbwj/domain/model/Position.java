@@ -16,6 +16,7 @@ public class Position {
     private String name;
     private String description;
     private String sportName; // For display purposes
+    private String positionType;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

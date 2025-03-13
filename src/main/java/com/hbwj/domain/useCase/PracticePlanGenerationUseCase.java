@@ -66,6 +66,17 @@ public class PracticePlanGenerationUseCase {
                 drillEquipmentService
         );
 
+        // Count how many drill slots we'll need to fill
+        int estimatedDrillCount = calculateRequiredDrillCount(requestDto);
+
+        if (availableDrills.size() < estimatedDrillCount) {
+            // Log a warning that we might not have enough unique drills
+            System.out.println("WARNING: Found " + availableDrills.size() +
+                    " drills but might need approximately " + estimatedDrillCount +
+                    " for the practice plan. Generic drills may be used.");
+        }
+
+        // Check that we have at least some drills to work with
         if (availableDrills.isEmpty()) {
             throw new ResourceNotFoundException("No suitable drills found for the specified criteria");
         }
@@ -178,6 +189,35 @@ public class PracticePlanGenerationUseCase {
         responseDto.setEquipmentNeeded(equipmentCalculator.calculateEquipmentNeeded(sections));
 
         return responseDto;
+    }
+
+    // Add this helper method to estimate how many unique drills we'll need
+    private int calculateRequiredDrillCount(PracticePlanGenerateRequest requestDto) {
+        int count = 0;
+
+        // Warmup (1 drill)
+        count += 1;
+
+        // Stations
+        if (requestDto.getStationTotalDurationMinutes() != null && requestDto.getStationTotalDurationMinutes() > 0) {
+            count += requestDto.getCoachingStations();
+        }
+
+        // Position groups (approximately 1 per position)
+        if (requestDto.getPositionGroupDurationMinutes() != null && requestDto.getPositionGroupDurationMinutes() > 0) {
+            // Rough estimate - about 5 positions per sport on average
+            count += 5;
+
+            // If no specific focus area, we'll have both offense and defense position groups
+            if (requestDto.getFocusAreaId() == null) {
+                count += 5; // Double for both offense and defense
+            }
+        }
+
+        // Team time (1 drill)
+        count += 1;
+
+        return count;
     }
 
     /**

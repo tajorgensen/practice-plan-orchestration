@@ -19,6 +19,7 @@ public class Drill {
     private String instructions;
     private Integer durationMinutes;
     private String difficultyLevel;
+    private Boolean isTeamActivity = false;
     private Long focusAreaId;
     private String focusAreaName; // For display purposes
     private Set<Long> sportIds = new HashSet<>();

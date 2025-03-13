@@ -3,6 +3,7 @@ package com.hbwj.adapter.api;
 import com.hbwj.domain.model.Drill;
 import com.hbwj.domain.model.DrillDetail;
 import com.hbwj.domain.model.DrillEquipment;
+import com.hbwj.domain.model.Position;
 import com.hbwj.domain.port.DrillEquipmentService;
 import com.hbwj.domain.port.DrillService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -124,5 +125,27 @@ public class DrillController {
     @Operation(summary = "Get equipment for a drill")
     public ResponseEntity<List<DrillEquipment>> getDrillEquipmentByDrillId(@PathVariable Long id) {
         return ResponseEntity.ok(drillEquipmentService.getDrillEquipmentByDrillId(id));
+    }
+
+    @PostMapping("/{id}/positions/{positionId}")
+    @Operation(summary = "Add a position to a drill")
+    public ResponseEntity<Void> addPositionToDrill(
+            @PathVariable Long id, @PathVariable Long positionId) {
+        drillService.addPositionToDrill(id, positionId);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @DeleteMapping("/{drillId}/positions/{positionId}")
+    @Operation(summary = "Remove a position from a drill")
+    public ResponseEntity<Void> removePositionFromDrill(
+            @PathVariable Long drillId, @PathVariable Long positionId) {
+        drillService.removePositionFromDrill(drillId, positionId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}/positions")
+    @Operation(summary = "Get positions for a drill")
+    public ResponseEntity<List<Position>> getDrillPositions(@PathVariable Long id) {
+        return ResponseEntity.ok(drillService.getDrillPositions(id));
     }
 }

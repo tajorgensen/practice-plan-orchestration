@@ -38,6 +38,9 @@ public class PositionEntity extends BaseEntity {
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
+    @Column(name = "position_type", nullable = false)
+    private String positionType; // "OFFENSE", "DEFENSE", "SPECIAL_TEAMS", "BOTH"
+
     @ManyToMany(mappedBy = "positions")
     private Set<DrillEntity> drills = new HashSet<>();
 }

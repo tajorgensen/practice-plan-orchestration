@@ -57,6 +57,7 @@ public class PositionServiceImpl implements PositionService {
         position.setName(position.getName());
         position.setDescription(position.getDescription());
         position.setSport(sport);
+        position.setPositionType(domain.getPositionType());
 
         PositionEntity savedPosition = positionRepository.save(position);
         return mapTo(savedPosition);
@@ -74,6 +75,7 @@ public class PositionServiceImpl implements PositionService {
         position.setName(position.getName());
         position.setDescription(position.getDescription());
         position.setSport(sport);
+        position.setPositionType(domain.getPositionType());
 
         PositionEntity updatedPosition = positionRepository.save(position);
         return mapTo(updatedPosition);
@@ -88,6 +90,20 @@ public class PositionServiceImpl implements PositionService {
         positionRepository.deleteById(id);
     }
 
+    @Override
+    public List<Position> getPositionsBySportIdAndPositionType(Long sportId, String positionType) {
+        return positionRepository.findBySportIdAndPositionType(sportId, positionType).stream()
+                .map(this::mapTo)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Position> getPositionsBySportIdAndPositionTypeIncludingBoth(Long sportId, String positionType) {
+        return positionRepository.findBySportIdAndPositionTypeIncludingBoth(sportId, positionType).stream()
+                .map(this::mapTo)
+                .collect(Collectors.toList());
+    }
+
     private Position mapTo(PositionEntity position) {
         Position dto = new Position();
         dto.setId(position.getId());
@@ -95,6 +111,7 @@ public class PositionServiceImpl implements PositionService {
         dto.setDescription(position.getDescription());
         dto.setSportId(position.getSport().getId());
         dto.setSportName(position.getSport().getName());
+        dto.setPositionType(position.getPositionType());
         dto.setCreatedAt(position.getCreatedAt());
         dto.setUpdatedAt(position.getUpdatedAt());
         return dto;

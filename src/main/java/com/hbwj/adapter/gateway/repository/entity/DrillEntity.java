@@ -53,6 +53,9 @@ public class DrillEntity extends BaseEntity {
     @Column(name = "difficulty_level")
     private String difficultyLevel;
 
+    @Column(name = "is_team_activity")
+    private Boolean isTeamActivity = false;
+
     @ManyToOne
     @JoinColumn(name = "focus_area_id", nullable = false)
     private FocusAreaEntity focusArea;

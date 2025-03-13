@@ -135,6 +135,7 @@ public class DrillServiceImpl implements DrillService {
         drill.setDurationMinutes(domain.getDurationMinutes());
         drill.setDifficultyLevel(domain.getDifficultyLevel());
         drill.setFocusArea(focusArea);
+        drill.setIsTeamActivity(domain.getIsTeamActivity() != null ? domain.getIsTeamActivity() : false);
 
         // Save the drill first to get an ID
         DrillEntity savedDrill = drillRepository.save(drill);
@@ -202,6 +203,7 @@ public class DrillServiceImpl implements DrillService {
         drill.setDurationMinutes(domain.getDurationMinutes());
         drill.setDifficultyLevel(domain.getDifficultyLevel());
         drill.setFocusArea(focusArea);
+        drill.setIsTeamActivity(domain.getIsTeamActivity() != null ? domain.getIsTeamActivity() : drill.getIsTeamActivity());
 
         // Update sports
         if (domain.getSportIds() != null) {
@@ -339,6 +341,62 @@ public class DrillServiceImpl implements DrillService {
         drillEquipmentRepository.deleteAll(drillEquipments);
     }
 
+    @Override
+    @Transactional
+    public void addPositionToDrill(Long drillId, Long positionId) {
+        DrillEntity drill = drillRepository.findById(drillId)
+                .orElseThrow(() -> new ResourceNotFoundException("Drill not found with id: " + drillId));
+
+        PositionEntity position = positionRepository.findById(positionId)
+                .orElseThrow(() -> new ResourceNotFoundException("Position not found with id: " + positionId));
+
+        // Check if the position is already associated with the drill
+        if (drill.getPositions().stream().noneMatch(p -> p.getId().equals(positionId))) {
+            drill.getPositions().add(position);
+            drillRepository.save(drill);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void removePositionFromDrill(Long drillId, Long positionId) {
+        DrillEntity drill = drillRepository.findById(drillId)
+                .orElseThrow(() -> new ResourceNotFoundException("Drill not found with id: " + drillId));
+
+        PositionEntity position = positionRepository.findById(positionId)
+                .orElseThrow(() -> new ResourceNotFoundException("Position not found with id: " + positionId));
+
+        if (drill.getPositions().removeIf(p -> p.getId().equals(positionId))) {
+            drillRepository.save(drill);
+        } else {
+            throw new ResourceNotFoundException("Position with id " + positionId +
+                    " not found for drill with id " + drillId);
+        }
+    }
+
+    @Override
+    public List<Position> getDrillPositions(Long drillId) {
+        DrillEntity drill = drillRepository.findById(drillId)
+                .orElseThrow(() -> new ResourceNotFoundException("Drill not found with id: " + drillId));
+
+        return drill.getPositions().stream()
+                .map(this::mapPositionToDto)
+                .collect(Collectors.toList());
+    }
+
+    // Helper method to map PositionEntity to Position DTO
+    private Position mapPositionToDto(PositionEntity position) {
+        Position dto = new Position();
+        dto.setId(position.getId());
+        dto.setName(position.getName());
+        dto.setDescription(position.getDescription());
+        dto.setSportId(position.getSport().getId());
+        dto.setSportName(position.getSport().getName());
+        dto.setCreatedAt(position.getCreatedAt());
+        dto.setUpdatedAt(position.getUpdatedAt());
+        return dto;
+    }
+
     private Drill mapToDto(DrillEntity drill) {
         Drill domain = new Drill();
         domain.setId(drill.getId());
@@ -349,6 +407,7 @@ public class DrillServiceImpl implements DrillService {
         domain.setDifficultyLevel(drill.getDifficultyLevel());
         domain.setFocusAreaId(drill.getFocusArea().getId());
         domain.setFocusAreaName(drill.getFocusArea().getName());
+        domain.setIsTeamActivity(drill.getIsTeamActivity());
 
         // Set related IDs
         domain.setSportIds(drill.getSports().stream()
@@ -397,6 +456,7 @@ public class DrillServiceImpl implements DrillService {
         dto.setDifficultyLevel(drill.getDifficultyLevel());
         dto.setFocusAreaId(drill.getFocusArea().getId());
         dto.setFocusAreaName(drill.getFocusArea().getName());
+        dto.setIsTeamActivity(drill.getIsTeamActivity());
 
         // Set related IDs
         dto.setSportIds(drill.getSports().stream()
